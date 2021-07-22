@@ -1,0 +1,60 @@
+apiVersion: app/v1 
+kind: Deployment 
+metadata: 
+  name: auth-depl 
+spec: 
+  replica: 1
+  #selector - step 1 to tell deployment how to find all the pods it will create
+  selector: 
+    matchLabels: 
+      app: auth 
+  #template - step 2 how to create each individual pod that this deployment will create
+  template: 
+    metadata: 
+      labels: 
+        app: auth 
+    # the spec tells pod how to behave 
+    spec: 
+      containers: 
+        - name: auth 
+          image: alisher83/auth
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: cygnetops/auth
+
+
+---
+#we want to create a service to access this pod
+apiVersion : v1 
+kind: Service
+metadata: 
+  name: auth-srv 
+#the spec tells service how to behave 
+spec: 
+  # by default this create cluster ip service 
+  # this tells this service how to find a set of pods with the label auth
+  selector: 
+     app: auth 
+  # this exposes ports
+  ports: 
+    - name: auth
+      protocol: TCP 
+      port: 3000
+      targetPort: 3000
+
+    
