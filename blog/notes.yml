@@ -4,17 +4,14 @@ metadata:
   name: auth-depl 
 spec: 
   replica: 1
-  #selector - step 1 to tell deployment how to find all the pods it will create
-  selector: 
+  selector:  #selector - step 1 - tell deployment how to find all the pods it will create
     matchLabels: 
       app: auth 
-  #template - step 2 how to create each individual pod that this deployment will create
-  template: 
+  template:   #template - step 2 tell deployments to create a pod
     metadata: 
       labels: 
         app: auth 
-    # the spec tells pod how to behave 
-    spec: 
+    spec:    # the spec tells pod how to behave 
       containers: 
         - name: auth 
           image: alisher83/auth
